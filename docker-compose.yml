@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+    elasticsearch:
+        image: elasticsearch:6.6.1
+        networks:
+            - elk
+        ports:
+            - '9200:9200'
+            - '9300:9300'
+    # volumes:
+    #     - elasticsearch-data:/usr/share/elasticsearch/data
+    logstash:
+        image: logstash:6.6.1
+        # command: bin/logstash --config.reload.automatic
+        networks:
+            - elk
+        ports:
+            - '8080:8080'
+        volumes:
+            - ./config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+            - ./pipeline/:/usr/share/logstash/pipeline/
+            - ./logs/:/logs/
+        depends_on:
+            - elasticsearch
+    kibana:
+        image: kibana:6.6.1
+        networks:
+            - elk
+        ports:
+            - '5601:5601'
+        depends_on:
+            - elasticsearch
+    kibana_setup:
+        build: ./kibana-setup
+        networks:
+            - elk
+        depends_on:
+            - kibana
+
+networks:
+    elk:
+# volumes:
+#     elasticsearch-data:
