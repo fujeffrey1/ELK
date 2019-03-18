@@ -18,5 +18,3 @@ done
 
 # Load dashboard
 curl -H "Content-Type: application/json" -H "kbn-xsrf: true" -XPOST kibana:5601/api/kibana/dashboards/import -d @/export.json
-
-exec "$@"

@@ -7,5 +7,3 @@ COPY ./wait-for-kibana.sh /
 COPY ./export.json /
 
 ENTRYPOINT ["/wait-for-kibana.sh"]
-
-CMD echo "Done"
