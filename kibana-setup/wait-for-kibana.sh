@@ -3,14 +3,14 @@
 set -e
 
 # Wait for Elasticsearch to start up before doing anything.
-until curl -s -f http://elasticsearch:9200/_cat/health -o /dev/null; do
+until $(curl -s -f http://elasticsearch:9200/_cat/health -o /dev/null); do
     echo "Waiting for Elasticsearch..."
     sleep 10
 done
 
 
 # Wait for Kibana to start up before doing anything.
-until curl -s -I -f http://kibana:5601/status -o /dev/null; do
+until $(curl -s -I -f http://kibana:5601/status -o /dev/null); do
     echo "Waiting for Kibana..."
     sleep 10
 done
